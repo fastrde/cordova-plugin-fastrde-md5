@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+            id="de.fastr.phonegap.plugins.md5chksum" version="0.1">
+        <name>MD5 Checksum</name>
+				<author>Fabian Strachanski</author>
+        <description>MD5 Checksum for Files on Android and iOS</description>
+        <license>MIT</license>
+        <keywords>file,md5,checksum,hash</keywords>
+  			<dependency id="org.apache.cordova.file" version="1.0.1" />
+        <js-module src="www/md5chksum.js" name="md5chksum">
+            <clobbers target="md5chksum" /> <!-- window.md5chksum -->
+        </js-module>
+				<platform name="android">
+					<source-file src="src/android/md5chksum.java" target-dir="src/de/fastr/phonegap/plugins" />
+        	<config-file target="res/xml/config.xml" parent="/*">
+      			<feature name="md5chksum">
+        			<param name="android-package" value="de.fastr.phonegap.plugins.md5chksum"/>
+      			</feature>
+        	</config-file>
+				</platform>
+				<platform name="ios">
+					<header-file src="src/ios/md5chksum.h" /> 
+					<source-file src="src/ios/md5chksum.m" /> 
+					<config-file target="config.xml" parent="/*">
+					<feature name="md5chksum">
+        		<param name="ios-package" value="md5chksum" />
+    			</feature>
+        	</config-file>
+				</platform>
+    </plugin>
