@@ -54,19 +54,9 @@ public class md5chksum extends CordovaPlugin{
 
     try{
       stream = new FileInputStream(file);
-    }catch (FileNotFoundException e){
-			callbackContext.error("File not found" + fileUri.toString());
-			return false;
-    }
 
-    try{
       md5 = MessageDigest.getInstance("md5");
-    }catch (NoSuchAlgorithmException e){
-      callbackContext.error("No MD5-Implementation Found");
-			return false;
-    }
 
-    try{
       while((bytesRead = stream.read(buf)) > 0){
         md5.update(buf, 0, bytesRead);
       }
@@ -77,7 +67,14 @@ public class md5chksum extends CordovaPlugin{
       hex = ("0000000000000000000000000000000" + hex);
       hex = hex.substring(hex.length()-32, hex.length());
 			callbackContext.success(hex);
+      
 			return true;
+    }catch (FileNotFoundException e){
+      callbackContext.error("File not found" + fileUri.toString());
+      return false;
+    }catch (NoSuchAlgorithmException e){
+      callbackContext.error("No MD5-Implementation Found");
+      return false;
     }catch(IOException e){
       callbackContext.error("IO Error while processing MD5");
       return false;
