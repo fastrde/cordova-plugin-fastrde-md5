@@ -23,7 +23,6 @@
 
 - (void)file:(CDVInvokedUrlCommand*)command
 {
-	self.storedCallbackId = command.callbackId;
 	[self.commandDelegate runInBackground:^{
 		CDVPluginResult* pluginResult = nil;
 		NSString *url  = [command.arguments objectAtIndex:0];
@@ -42,11 +41,11 @@
 		CC_MD5_Final(digest, &md5);
 		NSString* hex = [NSString stringWithFormat: @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",digest[0], digest[1], digest[2], digest[3], digest[4], digest[5], digest[6], digest[7], digest[8], digest[9], digest[10], digest[11], digest[12], digest[13], digest[14], digest[15]];
 		if (hex != nil && [hex length] > 0) {
-			pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:hex];
+			pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[hex uppercaseString]];
 		} else {
 			pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
 		}
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:self.storedCallbackId];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	}];
 }
 @end
