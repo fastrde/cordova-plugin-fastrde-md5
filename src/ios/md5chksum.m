@@ -23,7 +23,6 @@
 
 - (void)file:(CDVInvokedUrlCommand*)command
 {
-	self.storedCallbackId = command.callbackId;
 	[self.commandDelegate runInBackground:^{
 		CDVPluginResult* pluginResult = nil;
 		NSString *url  = [command.arguments objectAtIndex:0];
@@ -46,7 +45,7 @@
 		} else {
 			pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
 		}
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:self.storedCallbackId];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	}];
 }
 @end
